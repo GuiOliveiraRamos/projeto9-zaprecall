@@ -6,7 +6,7 @@ export default function Perguntas() {
       <ul>
         <Pergunta>
           <p>Pergunta 1</p>
-          <img src={seta_play} alt={seta_play}/>
+          <img src={seta_play} alt={seta_play} />
         </Pergunta>
       </ul>
     )
