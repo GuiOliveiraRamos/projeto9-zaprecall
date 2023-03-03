@@ -1,5 +1,8 @@
+import { useState } from "react"
 import styled from "styled-components"
 import seta_play from "./assets/seta_play.png"
+import cards from "./cards"
+import seta_virar from "./assets/seta_virar.png"
 
 export default function Perguntas() {
 
@@ -8,16 +11,30 @@ export default function Perguntas() {
     { id: 2, texto: 'Pergunta 2' },
     { id: 3, texto: 'Pergunta 3' },
     { id: 4, texto: 'Pergunta 4' },
-      ]
+  ]
+
+  const [virarPergunta, setVirarPergunta] = useState(false)
+
+  const showQuestion = () => {
+
+    setVirarPergunta(!virarPergunta)
+
+  }
 
   return (
     <ul>
       {arrayPerguntas.map((question) => (
-        <Pergunta key={question.id}>
+        <Pergunta onClick={showQuestion} key={question.id}>
           <p>{question.texto}</p>
           <img src={seta_play} alt={seta_play} />
         </Pergunta>
       ))}
+      {virarPergunta && (
+        <Conteudo>
+          <p>{cards[0].question}</p>
+          <img src={seta_virar} alt= {seta_virar}/>
+        </Conteudo>
+      )}
     </ul>
   )
 }
@@ -44,3 +61,33 @@ const Pergunta = styled.li`
 }
 `
 
+const Conteudo = styled.div`
+width:299px ;
+height:131px ;
+border-radius: 5px;
+background-color: #FFFFD4;
+box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
+padding:10px;
+display:flex ;
+justify-content:space-between ;
+flex-wrap:wrap;
+position:relative ;
+
+p{
+  font-family: 'Recursive';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 22px;
+color: #333333;
+}
+
+img{
+height:20px ;
+width:30px ;
+position:absolute ;
+right:10px ;
+bottom: 10px;
+}
+
+`
