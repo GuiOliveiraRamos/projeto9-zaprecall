@@ -1,18 +1,20 @@
 import "./css/reset.css"
-import "./css/style.css"
 import logo from "./assets/logo.png"
 import Perguntas from "./Perguntas";
 import styled from "styled-components";
 
-function App() {
+function App({}) {
+
+
+
   return (
     <><Appstyled>
       <Titulo>
         <img src={logo} alt={logo}></img>
         <h1>ZapRecall</h1>
       </Titulo>
-      <Perguntas />
-    </Appstyled>
+      <Perguntas/>
+     </Appstyled>
       <Footer>
         <p>0/4 CONCLUÍDOS</p>
       </Footer></>

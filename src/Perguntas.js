@@ -2,14 +2,24 @@ import styled from "styled-components"
 import seta_play from "./assets/seta_play.png"
 
 export default function Perguntas() {
-    return (
-      <ul>
-        <Pergunta>
-          <p>Pergunta 1</p>
+
+  const arrayPerguntas = [
+    { id: 1, texto: 'Pergunta 1' },
+    { id: 2, texto: 'Pergunta 2' },
+    { id: 3, texto: 'Pergunta 3' },
+    { id: 4, texto: 'Pergunta 4' },
+      ]
+
+  return (
+    <ul>
+      {arrayPerguntas.map((question) => (
+        <Pergunta key={question.id}>
+          <p>{question.texto}</p>
           <img src={seta_play} alt={seta_play} />
         </Pergunta>
-      </ul>
-    )
+      ))}
+    </ul>
+  )
 }
 
 
