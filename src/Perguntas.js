@@ -14,26 +14,34 @@ export default function Perguntas() {
   ]
 
   const [virarPergunta, setVirarPergunta] = useState(false)
+  const [segundoCard, setSegundoCard] = useState(null)
+  const [perguntaSelecionada, setPerguntaSelecionada] = useState(null)
 
-  const showQuestion = () => {
+  const showQuestion = (index) => {
 
+    setSegundoCard(cards[index])
     setVirarPergunta(!virarPergunta)
+    setPerguntaSelecionada(index)
 
   }
 
   return (
     <ul>
-      {arrayPerguntas.map((question) => (
-        <Pergunta onClick={showQuestion} key={question.id}>
-          <p>{question.texto}</p>
-          <img src={seta_play} alt={seta_play} />
-        </Pergunta>
-      ))}
-      {virarPergunta && (
-        <Conteudo>
-          <p>{cards[0].question}</p>
-          <img src={seta_virar} alt= {seta_virar}/>
-        </Conteudo>
+ {arrayPerguntas.map((question, index) =>
+        virarPergunta && perguntaSelecionada === index ? (
+          <Conteudo key={question.id}>
+            <p>{segundoCard.question}</p>
+            <img src={seta_virar} alt={seta_virar} />
+          </Conteudo>
+        ) : (
+          <Pergunta
+            onClick={() => showQuestion(index)}
+            key={question.id}
+          >
+            <p>{question.texto}</p>
+            <img src={seta_play} alt={seta_play} />
+          </Pergunta>
+        )
       )}
     </ul>
   )
