@@ -17,17 +17,33 @@ export default function Perguntas() {
   const [perguntaSelecionada, setPerguntaSelecionada] = useState(null);
   const [terceiroCard, setTerceiroCard] = useState(null);
   const [resposta, setResposta] = useState(false);
+  const [botaoClicado, setBotaoClicado] = useState("");
+  const [cores, setCores] = useState({});
 
   const mostrarPergunta = (index) => {
     setSegundoCard(cards[index]);
     setVirarPergunta(!virarPergunta);
     setPerguntaSelecionada(index);
     setResposta(false);
+    setBotaoClicado("");
+    setCores((prevState) => ({
+      ...prevState,
+      [index]: "#ffffff",
+    }));
   };
 
   const mostrarResposta = () => {
     setTerceiroCard(cards[perguntaSelecionada]);
     setResposta(true);
+  };
+
+  const armazenarCor = (cor) => {
+    setBotaoClicado(cor);
+    setVirarPergunta(false);
+    setCores((prevState) => ({
+      ...prevState,
+      [perguntaSelecionada]: cor,
+    }));
   };
 
   return (
@@ -37,9 +53,24 @@ export default function Perguntas() {
           resposta ? (
             <Conteudo key={question.id}>
               <p>{terceiroCard.answer}</p>
-              <Button1>Não lembrei</Button1>
-              <Button2>Quase não lembrei</Button2>
-              <Button3>Zap!</Button3>
+              <Button1
+                style={{ color: cores[perguntaSelecionada] }}
+                onClick={() => armazenarCor("#ff3030")}
+              >
+                Não lembrei
+              </Button1>
+              <Button2
+                style={{ color: cores[perguntaSelecionada] }}
+                onClick={() => armazenarCor("#ff5722")}
+              >
+                Quase não lembrei
+              </Button2>
+              <Button3
+                style={{ color: cores[perguntaSelecionada] }}
+                onClick={() => armazenarCor("#2fbe34")}
+              >
+                Zap!
+              </Button3>
             </Conteudo>
           ) : (
             <Conteudo key={question.id} onClick={() => mostrarResposta()}>
@@ -48,7 +79,11 @@ export default function Perguntas() {
             </Conteudo>
           )
         ) : (
-          <Pergunta onClick={() => mostrarPergunta(index)} key={question.id}>
+          <Pergunta
+            style={{ color: cores[index] }}
+            onClick={() => mostrarPergunta(index)}
+            key={question.id}
+          >
             <p>{question.texto}</p>
             <img src={seta_play} alt={seta_play} />
           </Pergunta>
@@ -75,7 +110,6 @@ const Pergunta = styled.li`
     font-weight: 700;
     font-size: 16px;
     line-height: 19px;
-    color: #333333;
   }
 `;
 
