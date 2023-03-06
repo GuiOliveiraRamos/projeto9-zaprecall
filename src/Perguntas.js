@@ -3,17 +3,108 @@ import styled from "styled-components";
 import seta_play from "./assets/seta_play.png";
 import cards from "./cards";
 import seta_virar from "./assets/seta_virar.png";
+import icone_erro from "./assets/icone_erro.png";
+import icone_quase from "./assets/icone_quase.png";
+import icone_certo from "./assets/icone_certo.png";
 
 export default function Perguntas() {
   const arrayPerguntas = [
-    { id: 1, texto: "Pergunta 1" },
-    { id: 2, texto: "Pergunta 2" },
-    { id: 3, texto: "Pergunta 3" },
-    { id: 4, texto: "Pergunta 4" },
-    { id: 5, texto: "Pergunta 5" },
-    { id: 6, texto: "Pergunta 6" },
-    { id: 7, texto: "Pergunta 7" },
-    { id: 8, texto: "Pergunta 8" },
+    {
+      id: 1,
+      texto: "Pergunta 1",
+      img: seta_play,
+      imgErro: icone_erro,
+      imgQuase: icone_quase,
+      imgCerto: icone_certo,
+      cor: null,
+      corErro: "#FF3030",
+      corQuase: "#FF922E",
+      corCerto: "#2FBE34"
+    },
+    {
+      id: 2,
+      texto: "Pergunta 2",
+      img: seta_play,
+      imgErro: icone_erro,
+      imgQuase: icone_quase,
+      imgCerto: icone_certo,
+      cor: null,
+      corErro: "#FF3030",
+      corQuase: "#FF922E",
+      corCerto: "#2FBE34"
+    },
+    {
+      id: 3,
+      texto: "Pergunta 3",
+      img: seta_play,
+      imgErro: icone_erro,
+      imgQuase: icone_quase,
+      imgCerto: icone_certo,
+      cor: null,
+      corErro: "#FF3030",
+      corQuase: "#FF922E",
+      corCerto: "#2FBE34"
+    },
+    {
+      id: 4,
+      texto: "Pergunta 4",
+      img: seta_play,
+      imgErro: icone_erro,
+      imgQuase: icone_quase,
+      imgCerto: icone_certo,
+      cor: null,
+      corErro: "#FF3030",
+      corQuase: "#FF922E",
+      corCerto: "#2FBE34"
+    },
+    {
+      id: 5,
+      texto: "Pergunta 5",
+      img: seta_play,
+      imgErro: icone_erro,
+      imgQuase: icone_quase,
+      imgCerto: icone_certo,
+      cor: null,
+      corErro: "#FF3030",
+      corQuase: "#FF922E",
+      corCerto: "#2FBE34"
+    },
+    {
+      id: 6,
+      texto: "Pergunta 6",
+      img: seta_play,
+      imgErro: icone_erro,
+      imgQuase: icone_quase,
+      imgCerto: icone_certo,
+      cor: null,
+      corErro: "#FF3030",
+      corQuase: "#FF922E",
+      corCerto: "#2FBE34"
+    },
+    {
+      id: 7,
+      texto: "Pergunta 7",
+      img: seta_play,
+      imgErro: icone_erro,
+      imgQuase: icone_quase,
+      imgCerto: icone_certo,
+      cor: null,
+      corErro: "#FF3030",
+      corQuase: "#FF922E",
+      corCerto: "#2FBE34"
+    },
+    {
+      id: 8,
+      texto: "Pergunta 8",
+      img: seta_play,
+      imgErro: icone_erro,
+      imgQuase: icone_quase,
+      imgCerto: icone_certo,
+      cor: null,
+      corErro: "#FF3030",
+      corQuase: "#FF922E",
+      corCerto: "#2FBE34"
+    },
   ];
 
   const [virarPergunta, setVirarPergunta] = useState(false);
@@ -21,8 +112,17 @@ export default function Perguntas() {
   const [perguntaSelecionada, setPerguntaSelecionada] = useState(null);
   const [terceiroCard, setTerceiroCard] = useState(null);
   const [resposta, setResposta] = useState(false);
-  const [cores, setCores] = useState({});
-  const [contador, setContador] = useState(0)
+  const [contador, setContador] = useState(0);
+  const [cores, setCores] = useState({
+    0: { cor: null, icone: seta_play },
+    1: { cor: null, icone: seta_play },
+    2: { cor: null, icone: seta_play },
+    3: { cor: null, icone: seta_play },
+    4: { cor: null, icone: seta_play },
+    5: { cor: null, icone: seta_play },
+    6: { cor: null, icone: seta_play },
+    7: { cor: null, icone: seta_play },
+  });
 
   const mostrarPergunta = (index) => {
     setSegundoCard(cards[index]);
@@ -38,15 +138,19 @@ export default function Perguntas() {
   const mostrarResposta = () => {
     setTerceiroCard(cards[perguntaSelecionada]);
     setResposta(true);
+    setCores((c) => ({
+      ...c,
+      [perguntaSelecionada]: { cor: arrayPerguntas[perguntaSelecionada].cor, icone: arrayPerguntas[perguntaSelecionada].img },
+    }));
   };
 
-  const armazenarCor = (cor) => {
+  const armazenarCor = (cor, icone) => {
     setVirarPergunta(false);
     setCores((c) => ({
       ...c,
-      [perguntaSelecionada]: cor,
-    }))
-    setContador(contador + 1)
+      [perguntaSelecionada]: { cor: cor, icone: icone },
+    }));
+    setContador(contador + 1);
   };
 
   return (
@@ -55,48 +159,62 @@ export default function Perguntas() {
         {arrayPerguntas.map((question, index) =>
           virarPergunta && perguntaSelecionada === index ? (
             resposta ? (
-              <Conteudo data-test = "flashcard" key={question.id}>
-                <p data-test = "flashcard-text">{terceiroCard.answer}</p>
+              <Conteudo data-test="flashcard" key={question.id}>
+                <p data-test="flashcard-text">{terceiroCard.answer}</p>
                 <Botoes>
-                  <Button1 data-test = "no-btn"
-                    style={{ color: cores[perguntaSelecionada] }}
-                    onClick={() => armazenarCor("#ff3030")}
+                  <Button1
+                    data-test="no-btn"
+                    style={{ color: cores[index].cor }}
+                    onClick={() => armazenarCor(arrayPerguntas[perguntaSelecionada].corErro, arrayPerguntas[perguntaSelecionada].imgErro)}
                   >
                     Não lembrei
                   </Button1>
-                  <Button2 data-test = "partial-btn"
-                    style={{ color: cores[perguntaSelecionada] }}
-                    onClick={() => armazenarCor("#ff5722")}
+                  <Button2
+                    data-test="partial-btn"
+                    style={{ color: cores[index].cor }}
+                    onClick={() => armazenarCor(arrayPerguntas[perguntaSelecionada].corQuase,arrayPerguntas[perguntaSelecionada].imgQuase)}
                   >
                     Quase não lembrei
                   </Button2>
-                  <Button3 data-test = "zap-btn"
-                    style={{ color: cores[perguntaSelecionada] }}
-                    onClick={() => armazenarCor("#2fbe34")}
+                  <Button3
+                    data-test="zap-btn"
+                    style={{ color: cores[index].cor }}
+                    onClick={() => armazenarCor(arrayPerguntas[perguntaSelecionada].corCerto, arrayPerguntas[perguntaSelecionada].imgCerto)}
                   >
                     Zap!
                   </Button3>
                 </Botoes>
               </Conteudo>
             ) : (
-              <Conteudo data-test = "flashcard" key={question.id} >
-                <p data-test = "flashcard-text">{segundoCard.question}</p>
-                <img data-test = "turn-btn" onClick={() => mostrarResposta()} src={seta_virar} alt={seta_virar} />
+              <Conteudo data-test="flashcard" key={question.id}>
+                <p data-test="flashcard-text">{segundoCard.question}</p>
+                <img
+                  data-test="turn-btn"
+                  onClick={() => mostrarResposta()}
+                  src={seta_virar}
+                  alt={seta_virar}
+                />
               </Conteudo>
             )
           ) : (
-            <Pergunta data-test = "flashcard"
-              style={{ color: cores[index] }}
+            <Pergunta
+              data-test="flashcard"
+              style={{ color: cores[index].cor }}
               key={question.id}
             >
-              <p data-test = "flashcard-text">{question.texto}</p>
-              <img data-test="play-btn" onClick={() => mostrarPergunta(index)} src={seta_play} alt={seta_play} />
+              <p data-test="flashcard-text">{question.texto}</p>
+              <img
+                data-test="play-btn"
+                onClick={() => mostrarPergunta(index)}
+                src={cores[index].icone}
+                alt={cores[index].icone}
+              />
             </Pergunta>
           )
         )}
       </ul>
-      <Rodape data-test = "footer" contador={contador}>
-        <p data-test = "footer">{contador}/8 CONCLUÍDOS</p>
+      <Rodape data-test="footer" contador={contador}>
+        <p data-test="footer">{contador}/8 CONCLUÍDOS</p>
       </Rodape>
     </>
   );
