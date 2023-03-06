@@ -22,14 +22,15 @@ export default function Perguntas() {
   const [terceiroCard, setTerceiroCard] = useState(null);
   const [resposta, setResposta] = useState(false);
   const [cores, setCores] = useState({});
+  const [contador, setContador] = useState(0)
 
   const mostrarPergunta = (index) => {
     setSegundoCard(cards[index]);
     setVirarPergunta(!virarPergunta);
     setPerguntaSelecionada(index);
     setResposta(false);
-    setCores((prevState) => ({
-      ...prevState,
+    setCores((c) => ({
+      ...c,
       [index]: "#ffffff",
     }));
   };
@@ -41,58 +42,63 @@ export default function Perguntas() {
 
   const armazenarCor = (cor) => {
     setVirarPergunta(false);
-    setCores((prevState) => ({
-      ...prevState,
+    setCores((c) => ({
+      ...c,
       [perguntaSelecionada]: cor,
-    }));
+    }))
+    setContador(contador + 1)
   };
 
   return (
-    <ul>
-      {arrayPerguntas.map((question, index) =>
-        virarPergunta && perguntaSelecionada === index ? (
-          resposta ? (
-            <Conteudo key={question.id}>
-              <p>{terceiroCard.answer}</p>
-              <Botoes>
-                <Button1
-                  style={{ color: cores[perguntaSelecionada] }}
-                  onClick={() => armazenarCor("#ff3030")}
-                >
-                  Não lembrei
-                </Button1>
-                <Button2
-                  style={{ color: cores[perguntaSelecionada] }}
-                  onClick={() => armazenarCor("#ff5722")}
-                >
-                  Quase não lembrei
-                </Button2>
-                <Button3
-                  style={{ color: cores[perguntaSelecionada] }}
-                  onClick={() => armazenarCor("#2fbe34")}
-                >
-                  Zap!
-                </Button3>
-              </Botoes>
-            </Conteudo>
+    <>
+      <ul>
+        {arrayPerguntas.map((question, index) =>
+          virarPergunta && perguntaSelecionada === index ? (
+            resposta ? (
+              <Conteudo data-test = "flashcard" key={question.id}>
+                <p data-test = "flashcard-text">{terceiroCard.answer}</p>
+                <Botoes>
+                  <Button1 data-test = "no-btn"
+                    style={{ color: cores[perguntaSelecionada] }}
+                    onClick={() => armazenarCor("#ff3030")}
+                  >
+                    Não lembrei
+                  </Button1>
+                  <Button2 data-test = "partial-btn"
+                    style={{ color: cores[perguntaSelecionada] }}
+                    onClick={() => armazenarCor("#ff5722")}
+                  >
+                    Quase não lembrei
+                  </Button2>
+                  <Button3 data-test = "zap-btn"
+                    style={{ color: cores[perguntaSelecionada] }}
+                    onClick={() => armazenarCor("#2fbe34")}
+                  >
+                    Zap!
+                  </Button3>
+                </Botoes>
+              </Conteudo>
+            ) : (
+              <Conteudo data-test = "flashcard" key={question.id} >
+                <p data-test = "flashcard-text">{segundoCard.question}</p>
+                <img data-test = "turn-btn" onClick={() => mostrarResposta()} src={seta_virar} alt={seta_virar} />
+              </Conteudo>
+            )
           ) : (
-            <Conteudo key={question.id} onClick={() => mostrarResposta()}>
-              <p>{segundoCard.question}</p>
-              <img src={seta_virar} alt={seta_virar} />
-            </Conteudo>
+            <Pergunta data-test = "flashcard"
+              style={{ color: cores[index] }}
+              key={question.id}
+            >
+              <p data-test = "flashcard-text">{question.texto}</p>
+              <img data-test="play-btn" onClick={() => mostrarPergunta(index)} src={seta_play} alt={seta_play} />
+            </Pergunta>
           )
-        ) : (
-          <Pergunta
-            style={{ color: cores[index] }}
-            onClick={() => mostrarPergunta(index)}
-            key={question.id}
-          >
-            <p>{question.texto}</p>
-            <img src={seta_play} alt={seta_play} />
-          </Pergunta>
-        )
-      )}
-    </ul>
+        )}
+      </ul>
+      <Rodape data-test = "footer" contador={contador}>
+        <p data-test = "footer">{contador}/8 CONCLUÍDOS</p>
+      </Rodape>
+    </>
   );
 }
 
@@ -178,4 +184,23 @@ const Button2 = styled.button`
 
 const Button3 = styled.button`
   background-color: #2fbe34;
+`;
+
+const Rodape = styled.div`
+  width: 375px;
+  height: 70px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+
+  p {
+    font-family: "Recursive";
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+  }
 `;

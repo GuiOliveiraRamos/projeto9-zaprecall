@@ -7,15 +7,12 @@ function App() {
   return (
     <>
       <Appstyled>
-        <Titulo>
+        <Header>
           <img src={logo} alt={logo}></img>
           <h1>ZapRecall</h1>
-        </Titulo>
+        </Header>
         <Perguntas />
       </Appstyled>
-      <Footer>
-        <p>0/4 CONCLUÍDOS</p>
-      </Footer>
     </>
   );
 }
@@ -32,7 +29,7 @@ const Appstyled = styled.div`
   padding-top: 42px;
 `;
 
-const Titulo = styled.div`
+const Header = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 51px;
@@ -51,21 +48,3 @@ const Titulo = styled.div`
   }
 `;
 
-const Footer = styled.div`
-  width: 375px;
-  height: 70px;
-  background-color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-
-  p {
-    font-family: "Recursive";
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 22px;
-  }
-`;
