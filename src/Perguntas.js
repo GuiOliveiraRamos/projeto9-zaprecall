@@ -10,6 +10,10 @@ export default function Perguntas() {
     { id: 2, texto: "Pergunta 2" },
     { id: 3, texto: "Pergunta 3" },
     { id: 4, texto: "Pergunta 4" },
+    { id: 5, texto: "Pergunta 5" },
+    { id: 6, texto: "Pergunta 6" },
+    { id: 7, texto: "Pergunta 7" },
+    { id: 8, texto: "Pergunta 8" },
   ];
 
   const [virarPergunta, setVirarPergunta] = useState(false);
@@ -17,7 +21,6 @@ export default function Perguntas() {
   const [perguntaSelecionada, setPerguntaSelecionada] = useState(null);
   const [terceiroCard, setTerceiroCard] = useState(null);
   const [resposta, setResposta] = useState(false);
-  const [botaoClicado, setBotaoClicado] = useState("");
   const [cores, setCores] = useState({});
 
   const mostrarPergunta = (index) => {
@@ -25,7 +28,6 @@ export default function Perguntas() {
     setVirarPergunta(!virarPergunta);
     setPerguntaSelecionada(index);
     setResposta(false);
-    setBotaoClicado("");
     setCores((prevState) => ({
       ...prevState,
       [index]: "#ffffff",
@@ -38,7 +40,6 @@ export default function Perguntas() {
   };
 
   const armazenarCor = (cor) => {
-    setBotaoClicado(cor);
     setVirarPergunta(false);
     setCores((prevState) => ({
       ...prevState,
@@ -53,24 +54,26 @@ export default function Perguntas() {
           resposta ? (
             <Conteudo key={question.id}>
               <p>{terceiroCard.answer}</p>
-              <Button1
-                style={{ color: cores[perguntaSelecionada] }}
-                onClick={() => armazenarCor("#ff3030")}
-              >
-                Não lembrei
-              </Button1>
-              <Button2
-                style={{ color: cores[perguntaSelecionada] }}
-                onClick={() => armazenarCor("#ff5722")}
-              >
-                Quase não lembrei
-              </Button2>
-              <Button3
-                style={{ color: cores[perguntaSelecionada] }}
-                onClick={() => armazenarCor("#2fbe34")}
-              >
-                Zap!
-              </Button3>
+              <Botoes>
+                <Button1
+                  style={{ color: cores[perguntaSelecionada] }}
+                  onClick={() => armazenarCor("#ff3030")}
+                >
+                  Não lembrei
+                </Button1>
+                <Button2
+                  style={{ color: cores[perguntaSelecionada] }}
+                  onClick={() => armazenarCor("#ff5722")}
+                >
+                  Quase não lembrei
+                </Button2>
+                <Button3
+                  style={{ color: cores[perguntaSelecionada] }}
+                  onClick={() => armazenarCor("#2fbe34")}
+                >
+                  Zap!
+                </Button3>
+              </Botoes>
             </Conteudo>
           ) : (
             <Conteudo key={question.id} onClick={() => mostrarResposta()}>
@@ -155,6 +158,14 @@ const Conteudo = styled.div`
     line-height: 14px;
     color: white;
   }
+`;
+
+const Botoes = styled.div`
+  width: 271px;
+  margin-left: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const Button1 = styled.button`
